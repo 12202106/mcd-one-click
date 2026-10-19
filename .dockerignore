@@ -1,0 +1,12 @@
+*
+!Dockerfile
+!requirements.txt
+!requirements.lock
+!app.py
+!gateway.py
+!one_click.py
+!spark_auth.py
+!settings.py
+!storage.py
+!web/
+!web/**

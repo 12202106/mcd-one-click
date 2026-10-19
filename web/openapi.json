@@ -1,0 +1,90 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "McDonald’s China one-click MCP HTTPS bridge",
+    "version": "2.0.0",
+    "description": "One public tool: mcd_one_click. Use prepare_order for a read-only ordering preview, run for read workflows with prior-result references, catalog for internal schemas, prepare_action for a concrete account-change review, and confirm_action only after explicit user confirmation. Never retry a timed-out write."
+  },
+  "servers": [
+    {
+      "url": "https://your-project.vercel.app/mcp-mcd"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "paths": {
+    "/api/tools": {
+      "get": {
+        "operationId": "listMcdTools",
+        "summary": "Return the single mcd_one_click tool",
+        "responses": {
+          "200": {
+            "description": "MCP tools list"
+          },
+          "401": {
+            "description": "Invalid gateway token"
+          },
+          "502": {
+            "description": "Upstream unavailable"
+          }
+        }
+      }
+    },
+    "/api/call": {
+      "post": {
+        "operationId": "callMcdTool",
+        "summary": "Call the single mcd_one_click entry",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "enum": [
+                      "mcd_one_click"
+                    ]
+                  },
+                  "arguments": {
+                    "type": "object",
+                    "additionalProperties": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "MCP CallToolResult; inspect isError even on HTTP 200"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "401": {
+            "description": "Invalid gateway token"
+          },
+          "502": {
+            "description": "Upstream failure; account changes must not be automatically retried"
+          }
+        }
+      }
+    }
+  }
+}

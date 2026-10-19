@@ -1,0 +1,14 @@
+.env*
+.git
+.state
+.venv
+__pycache__
+cloudflare
+docs
+test_*.py
+*.sqlite*
+*.db
+config.json
+access-token.txt
+client-config.json
+artifacts

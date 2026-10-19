@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: mcd-one-click
+    runtime: docker
+    plan: free
+    healthCheckPath: /mcp-mcd/health
+    envVars:
+      - key: PUBLIC_ORIGIN
+        sync: false
+      - key: MCD_GATEWAY_TOKEN
+        generateValue: true
+      - key: MCD_UPSTREAM_TOKEN
+        sync: false
+      - key: UPSTASH_REDIS_REST_URL
+        sync: false
+      - key: UPSTASH_REDIS_REST_TOKEN
+        sync: false
+      - key: MCD_STATE_NAMESPACE
+        value: mcd-one-click
+      - key: MCD_SERVERLESS
+        value: "1"
